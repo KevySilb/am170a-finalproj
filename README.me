@@ -42,11 +42,10 @@ can we find a value that maximizes the insulin produced.
 
 thoughts:
 
-	only having a -constant term is ill posed because at t = 0 you could extact insulin when there is no insulin to extract.
-
-	the extraction term in the diff eq should be something like $-\lambda I$, where $\lambda$ is a extraction rate parameter,
-	such that the amount of insulin extracted per time step is proportional to the amount of insulin in the system.  
-	This is more consistent with 'filtering' models where the amount of particles you are filtering per unit time, 
-	depends on the density or the amount of particles per unit volume in the system. 
+Only having a -constant term is ill posed because at t = 0 you could extract insulin when there is no insulin to extract.
+the extraction term in the diff eq should be something like -lambda, where lambda is a extraction rate parameter,
+such that the amount of insulin extracted per time step is proportional to the amount of insulin in the system.  
+This is more consistent with 'filtering' models where the amount of particles you are filtering per unit time, 
+depends on the density or the amount of particles per unit volume in the system. 
 	
 		
