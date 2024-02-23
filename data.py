@@ -58,15 +58,17 @@ def main():
     data = pd.read_csv('data_with_insulin.txt')
     # initial conditions (100 million bacteria, 0 insulin)
     init = (100, 0)
-    # define parameters (1000x sugar concentration, rate of insulin extraction))
-    params = (10000, 1.2e-3)
+    # define parameters (10000x sugar concentration, rate of insulin extraction))
+    params = (10000, 3.0e-1)
+    t_max = 200
+    t_eval = np.arange(0, t_max, 10)
 
-    sim = simulateBacteria(params, init, data['t'].values)
+    sim = simulateBacteria(params, init, t_eval)
     bac, insul = sim.sol.y
     
-    plt.plot(data['t'].values, bac, label = 'bacteria')
-    plt.plot(data['t'].values, insul, label = 'insulin')
-    plt.plot(np.linspace(0, 600, len(sim.cumsumInsulin)), sim.cumsumInsulin, label = 'insulin extracted')
+    plt.plot(t_eval, bac, label = 'bacteria')
+    plt.plot(t_eval, insul, label = 'insulin')
+    plt.plot(np.linspace(0, t_max, len(sim.cumsumInsulin)), sim.cumsumInsulin, label = 'insulin extracted')
     plt.yscale('log')
     plt.legend()
 
