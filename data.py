@@ -37,6 +37,7 @@ class simulateBacteria:
         self.Insulin += extractedInsulin
         # append new total to list for plotting 
         self.cumsumInsulin.append(self.Insulin)
+        
         # the ivp:
         dx1_dt = 0.0355 * x1 * (1-(x1/self.k)) - 1.68 * x1 * x2 
         dx2_dt = 5.41e-08 * x1 - extractedInsulin
@@ -59,23 +60,26 @@ def main():
     # initial conditions (100 million bacteria, 0 insulin)
     init = (100, 0)
     # define parameters (10000x sugar concentration, rate of insulin extraction))
-    params = (10000, 3.0e-1)
-    t_max = 200
+    params = (10000, .3)
+    t_max = 1250
     t_eval = np.arange(0, t_max, 10)
 
-    sim = simulateBacteria(params, init, t_eval)
-    bac, insul = sim.sol.y
-    
-    plt.plot(t_eval, bac, label = 'bacteria')
-    plt.plot(t_eval, insul, label = 'insulin')
-    plt.plot(np.linspace(0, t_max, len(sim.cumsumInsulin)), sim.cumsumInsulin, label = 'insulin extracted')
+    sim1 = simulateBacteria(params, init, t_eval)
+    sim2 = simulateBacteria((10000, 0), init, t_eval)
+    bac, insul = sim1.sol.y
+    bac2, insul2 = sim2.sol.y
+    # plt.plot(t_eval, bac, label = r'Bacteria')
+    # plt.plot(t_eval, insul, label = 'mg insulin')
+    # plt.plot(t_eval, bac2, label = r'$N_0$')
+    plt.plot(t_eval, insul2, label = r'$I_0$')
+    plt.plot(np.linspace(0, t_max, len(sim1.cumsumInsulin)), sim1.cumsumInsulin, label = r'Insulin Extracted')
+    plt.xlabel('minutes')
+    plt.ylabel('log(population density)')
     plt.yscale('log')
+    plt.title('Insulin extraction scheme')
     plt.legend()
 
     plt.show()
-
-    
-
 
 
 if __name__ == '__main__':
